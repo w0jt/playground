@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,4 +27,18 @@ class Application {
     @Enumerated(EnumType.STRING)
     private ApplicationType applicationType;
 
+    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attachment> attachments = new ArrayList<>();
+
+    void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+        for (Attachment attachment : attachments) {
+            attachment.setApplication(this);
+        }
+    }
+
+    void addAttachment(Attachment attachment) {
+        this.attachments.add(attachment);
+        attachment.setApplication(this);
+    }
 }
