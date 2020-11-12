@@ -20,5 +20,4 @@ class ContactDetails {
     private EmailAddress emailAddress;
     @Embedded
     private PhoneNumber phoneNumber;
-
 }
